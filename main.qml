@@ -28,6 +28,7 @@ ApplicationWindow {
 
             //console.log("===========>"+foo+generatedText.text)
             noteToGuess.visible=true;
+            noteToGuess.state="initial";
 
             if(foo===60){
                 generatedText.text = "C4(60)";
@@ -72,6 +73,7 @@ ApplicationWindow {
                 generatedText.text = "";
                 noteToGuess.y=0;
             }
+            noteToGuess.state="final";
         }
     }
     Connections{
@@ -139,12 +141,13 @@ ApplicationWindow {
                 noteRect.y=(root.height/2)-80
             } else {
                 noteText.text = "";
-                noteRect.visible=false;
+                noteRect.visible=false;;
                 noteRect.y=0;
             }
 
             if(note===foo.toString()){
                 status.text="YEAH!";
+                noteToGuess.state="initial"
             } else {
                 status.text="Booooo!";
             }
@@ -155,11 +158,13 @@ ApplicationWindow {
     Rectangle {
         id: noteRect
         height: 20
+
         width: 20
         x: parent.width/5
         visible: false
         color: "black"
         radius: width*0.5
+
     }
     Rectangle {
         id: noteToGuess
@@ -169,6 +174,29 @@ ApplicationWindow {
         visible: false
         color: "black"
         radius: width*0.5
+        transitions: [
+            Transition {
+                from: "initial"
+                to: "final"
+                PropertyAnimation { target: noteToGuess; properties: "x";
+                    duration: 4000; }
+            }
+        ]
+        states: [
+            State {
+                name: "initial"
+                PropertyChanges {
+                    target: noteToGuess; x: root.width*4/5
+                }
+            },
+            State {
+                name: "final"
+                PropertyChanges {
+                    target: noteToGuess; x: root.width/5
+
+                }
+            }
+        ]
     }
 
     Text {
@@ -248,51 +276,51 @@ ApplicationWindow {
         height: 1
         color: "white"
     }
-//    Rectangle {
-//        y: (parent.height/2)+20
-//        anchors.left: parent.left;
-//        anchors.right: parent.right;
-//        anchors.leftMargin: 10
-//        anchors.rightMargin: 10
-//        height: 1
-//        color: "black"
-//    }
-//    Rectangle {
-//        y: (parent.height/2)+40
-//        anchors.left: parent.left;
-//        anchors.right: parent.right;
-//        anchors.leftMargin: 10
-//        anchors.rightMargin: 10
-//        height: 1
-//        color: "black"
-//    }
-//    Rectangle {
-//        y: (parent.height/2)+60
-//        anchors.left: parent.left;
-//        anchors.right: parent.right;
-//        anchors.leftMargin: 10
-//        anchors.rightMargin: 10
-//        height: 1
-//        color: "black"
-//    }
-//    Rectangle {
-//        y: (parent.height/2)+80
-//        anchors.left: parent.left;
-//        anchors.right: parent.right;
-//        anchors.leftMargin: 10
-//        anchors.rightMargin: 10
-//        height: 1
-//        color: "black"
-//    }
-//    Rectangle {
-//        y: (parent.height/2)+100
-//        anchors.left: parent.left;
-//        anchors.right: parent.right;
-//        anchors.leftMargin: 10
-//        anchors.rightMargin: 10
-//        height: 1
-//        color: "black"
-//    }
+    //    Rectangle {
+    //        y: (parent.height/2)+20
+    //        anchors.left: parent.left;
+    //        anchors.right: parent.right;
+    //        anchors.leftMargin: 10
+    //        anchors.rightMargin: 10
+    //        height: 1
+    //        color: "black"
+    //    }
+    //    Rectangle {
+    //        y: (parent.height/2)+40
+    //        anchors.left: parent.left;
+    //        anchors.right: parent.right;
+    //        anchors.leftMargin: 10
+    //        anchors.rightMargin: 10
+    //        height: 1
+    //        color: "black"
+    //    }
+    //    Rectangle {
+    //        y: (parent.height/2)+60
+    //        anchors.left: parent.left;
+    //        anchors.right: parent.right;
+    //        anchors.leftMargin: 10
+    //        anchors.rightMargin: 10
+    //        height: 1
+    //        color: "black"
+    //    }
+    //    Rectangle {
+    //        y: (parent.height/2)+80
+    //        anchors.left: parent.left;
+    //        anchors.right: parent.right;
+    //        anchors.leftMargin: 10
+    //        anchors.rightMargin: 10
+    //        height: 1
+    //        color: "black"
+    //    }
+    //    Rectangle {
+    //        y: (parent.height/2)+100
+    //        anchors.left: parent.left;
+    //        anchors.right: parent.right;
+    //        anchors.leftMargin: 10
+    //        anchors.rightMargin: 10
+    //        height: 1
+    //        color: "black"
+    //    }
 
     MouseArea {
         anchors.fill: parent
